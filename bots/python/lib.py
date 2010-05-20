@@ -20,6 +20,7 @@ def read_update(stream):
         if not line.strip():
             break
         lines.append(line)
+    open("a.yaml", "w").write("".join(lines))
     return yaml.load("".join(lines))
 
 # Alternative Functional implementation of the imperative read_update() above.

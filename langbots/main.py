@@ -11,7 +11,7 @@ import yaml
 from langbots import lib
 from langbots import battlefield
 from langbots.inputmods import pygame_input, commands_input
-from langbots.outputmods import pygame_output, text_output
+from langbots.outputmods import pygame_output, dump_output
 
 def init_robots(config_file, config, robot_options):
     input_callbacks = {}
@@ -70,9 +70,9 @@ def get_output_callbacks(field, output_options):
             video = (outputmod == "video")
             screen, surfaces = pygame_output.init(screen_size, robot_images, video)
             output_callback = pygame_output.get_output_callback(screen, surfaces, video)
-        elif outputmod == "text":            
+        elif outputmod == "dump":            
             basename = args[0]
-            output_callback = text_output.get_output_callback(field, basename)        
+            output_callback = dump_output.get_output_callback(field, basename)        
         else:
             raise ValueError, "output module not available: %s" % outputmod
         output_callbacks.append(output_callback)
@@ -88,11 +88,11 @@ def main(args):
     parser.add_option('-r', '--robot', dest='robot', action="append",
         default=[], help='Add a robot to the battlefield (name:pygame | name:commands:botpath)')
     parser.add_option('-o', '--output', dest='output', action="append",
-        default=[], help='Active output module (pygame | text:basename)')
+        default=[], help='Active output module (pygame | dump:filename)')
     parser.add_option('-f', '--framerate', dest='frame_rate', type="int",
         default=None, help='Force framerate (for non-interactive)')
     parser.add_option('-p', '--play-battle', dest='play_battle', 
-        default=None, help='Text output file to play')
+        default=None, help='Dump file to play')
     parser.add_option('-c', '--field-config-file', dest='config_file', 
         default=None, help='Path to YAML config file')
     options, args0 = parser.parse_args(args)
