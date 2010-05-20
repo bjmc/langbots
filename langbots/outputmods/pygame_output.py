@@ -9,7 +9,7 @@ import pygame
 # App modules
 from langbots import lib
 
-Surfaces = lib.struct("Surfaces", ["robots", "bullet", "robot_surfaces"])
+Surfaces = lib.struct("Surfaces", ["robots", "bullet", "ground"])
 RobotSurfaces = lib.struct("RobotSurfaces", ["body", "turret"])
 
 def create_screen(size, caption):
@@ -33,7 +33,8 @@ def draw(screen, surface, pos, angle=None):
 
 def draw_field(screen, field, surfaces, video):                
     """Draw field to Pygame surface."""             
-    screen.fill((0, 40, 0)) 
+    #screen.fill((0, 0, 0))
+    screen.blit(surfaces.ground, (0, 0)) 
     for robot in field.robots.values():
         robot_surfaces = surfaces.robots[robot.name]
         draw(screen, robot_surfaces.body, (robot.x, robot.y), robot.angle)
@@ -66,7 +67,12 @@ def init(screen_size, robot_images, video=False):
         robot_surfaces = RobotSurfaces(body=body_surface, turret=turret_surface)
         robots_surfaces[robot_name] = robot_surfaces
     bullet_surface = load_image("bullet.png")
-    surfaces = Surfaces(robots=robots_surfaces, bullet=bullet_surface)
+    tile = load_image("ground1.png")
+    ground_surface = pygame.Surface(screen_size)
+    for x in range(0, screen_width, tile.get_size()[0]):
+        for y in range(0, screen_width, tile.get_size()[1]): 
+            ground_surface.blit(tile, (x, y))
+    surfaces = Surfaces(robots=robots_surfaces, bullet=bullet_surface, ground=ground_surface)
     return screen, surfaces
 
 def get_output_callback(screen, surfaces, video=False):
