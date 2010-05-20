@@ -67,11 +67,11 @@ def init(screen_size, robot_images, video=False):
         robot_surfaces = RobotSurfaces(body=body_surface, turret=turret_surface)
         robots_surfaces[robot_name] = robot_surfaces
     bullet_surface = load_image("bullet.png")
-    tile = load_image("ground1.png")
+    ground_tile = load_image("ground1.png")
     ground_surface = pygame.Surface(screen_size)
-    for x in range(0, screen_width, tile.get_size()[0]):
-        for y in range(0, screen_width, tile.get_size()[1]): 
-            ground_surface.blit(tile, (x, y))
+    for x in range(0, screen_width, ground_tile.get_size()[0]):
+        for y in range(0, screen_height, ground_tile.get_size()[1]): 
+            ground_surface.blit(ground_tile, (x, y))
     surfaces = Surfaces(robots=robots_surfaces, bullet=bullet_surface, ground=ground_surface)
     return screen, surfaces
 

@@ -71,8 +71,8 @@ def get_output_callbacks(field, output_options):
             screen, surfaces = pygame_output.init(screen_size, robot_images, video)
             output_callback = pygame_output.get_output_callback(screen, surfaces, video)
         elif outputmod == "dump":            
-            basename = args[0]
-            output_callback = dump_output.get_output_callback(field, basename)        
+            filename = args[0]
+            output_callback = dump_output.get_output_callback(filename)        
         else:
             raise ValueError, "output module not available: %s" % outputmod
         output_callbacks.append(output_callback)

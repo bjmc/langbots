@@ -8,7 +8,7 @@ import yaml
 from langbots import lib
 from langbots import battlefield
 
-def get_output_callback(field, filename):
+def get_output_callback(filename):
     outputfd = open(filename, "w")
     def _wrapper(field):
         return write_state(field, outputfd)
